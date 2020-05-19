@@ -2,9 +2,8 @@ from selenium import webdriver
 from time import sleep
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
-from pynput.keyboard import Key, Controller
-import pyautogui
-from contact import email, password, company, search_entry
+from pynput.keyboard import Key
+from contact import email, password, search_entry
 
 
 class LinkedInBot:
@@ -23,7 +22,7 @@ class LinkedInBot:
         sleep(1)
         # Enter password
         self.driver.find_element_by_xpath('/html/body/div/main/div[2]/form/div[2]/input').send_keys(password + Keys.RETURN)
-        sleep(4)
+        sleep(3)
 
     def daily_post(self):
         start_post = self.driver.find_element_by_class_name('share-box-feed-entry__trigger')
@@ -31,7 +30,7 @@ class LinkedInBot:
         start_post.click()
         sleep(1)
         # Whatever you want to post on your profile
-        message = "Hi everyone! I'm new to this site but it reminds me of MySpace, let's connect!"
+        message = "I'm trying to get into computer programming... my friend tells me Java is the same as Javascript, but which should I choose?"
         # Select text to enter post
         self.driver.find_element_by_xpath(
             '/html/body/div[4]/div/div/div[2]/div/div[1]/div[1]/div[2]/div/div/div/div/div[1]/p').send_keys(message)
@@ -47,7 +46,7 @@ class LinkedInBot:
         # If the post has been liked already, it will have in the outerHTML:"like"
         has_been_liked = "like"
         i = 0  # Starting with the first post in your feed
-        while i < 10:  # replace 10 with how ever many posts you want to like in your feed
+        while i < 8:  # replace 8 with how ever many posts you want to like in your feed
             # If the post you are on has NOT been liked already,
             if not has_been_liked in post[i].get_attribute('outerHTML'):
                 # like the post
@@ -77,7 +76,7 @@ class LinkedInBot:
         # So, to ignore these, just choose the buttons without "ollow"
 
         page_count = 0
-        while page_count < 5:  # Connect/Message recruiters on as many pages as you want
+        while page_count < 2:  # Connect/Message recruiters on as many pages as you want
             # variable to store all the 'connect' buttons (and cards) on a page
             connect = self.driver.find_elements_by_class_name('search-result__action-button')
 
@@ -140,7 +139,7 @@ class LinkedInBot:
                 # Send the message
                 self.driver.find_elements_by_class_name('msg-form__send-button').click()
         # Go to next page
-        driver.find_element_by_xpath('//*[@id="ember7512"]/span').click()
+        self.driver.find_element_by_xpath('//*[@id="ember7512"]/span').click()
         page_count += 1
 
 
