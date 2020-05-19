@@ -23,7 +23,7 @@ class LinkedInBot:
         sleep(1)
         # Enter password
         self.driver.find_element_by_xpath('/html/body/div/main/div[2]/form/div[2]/input').send_keys(password + Keys.RETURN)
-        sleep(8)
+        sleep(4)
 
     def daily_post(self):
         start_post = self.driver.find_element_by_class_name('share-box-feed-entry__trigger')
@@ -31,7 +31,7 @@ class LinkedInBot:
         start_post.click()
         sleep(1)
         # Whatever you want to post on your profile
-        message = "If anyone knows anything about cool internships or research opportunities, please let me know!"
+        message = "Hi everyone! I'm new to this site but it reminds me of MySpace, let's connect!"
         # Select text to enter post
         self.driver.find_element_by_xpath(
             '/html/body/div[4]/div/div/div[2]/div/div[1]/div[1]/div[2]/div/div/div/div/div[1]/p').send_keys(message)
@@ -80,8 +80,6 @@ class LinkedInBot:
         while page_count < 5:  # Connect/Message recruiters on as many pages as you want
             # variable to store all the 'connect' buttons (and cards) on a page
             connect = self.driver.find_elements_by_class_name('search-result__action-button')
-            # variable to store all the 'message' buttons on a page
-            message = self.driver.find_elements_by_class_name('message-anywhere-button')
 
             for i in range(0, len(connect)):  # For every connect/follow button on the page
                 connect = self.driver.find_elements_by_class_name('search-result__action-button')  # Need to reset connect counter
@@ -122,10 +120,13 @@ class LinkedInBot:
                     connect_invite = "Hi " + name_of_connection + "! " + connect_message
                     self.driver.find_element_by_xpath('//*[@id="custom-message"]').send_keys(connect_invite)  # Send your message
                     done_with_message = self.driver.find_elements_by_class_name('artdeco-button__text')  # Get all the buttons you can press
-                    done_with_message[4].click()  # The 'Done' or send button is the 5th one
+                    done_with_message[5].click()  # The 'Done' or send button is the 6th one
 
                     # Now, I have sent the message to my connection and can keep going
                     sleep(3)
+
+            # variable to store all the 'message' buttons on a page
+            message = self.driver.find_elements_by_class_name('message-anywhere-button')
             # Now, I have connected with everyone on the page
             # Time to send messages to those who allow me to do so!
             for j in range(0, len(message)):
@@ -141,6 +142,7 @@ class LinkedInBot:
         # Go to next page
         driver.find_element_by_xpath('//*[@id="ember7512"]/span').click()
         page_count += 1
+
 
 # Calling the functions to run the program
 bot = LinkedInBot()
