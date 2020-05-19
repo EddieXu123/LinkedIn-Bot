@@ -31,7 +31,7 @@ class LinkedInBot:
         start_post.click()
         sleep(1)
         # Whatever you want to post on your profile
-        message = "Hi everyone! I recently got a LinkedIn, please connect with me!"
+        message = "If anyone knows anything about cool internships or research opportunities, please let me know!"
         # Select text to enter post
         self.driver.find_element_by_xpath(
             '/html/body/div[4]/div/div/div[2]/div/div[1]/div[1]/div[2]/div/div/div/div/div[1]/p').send_keys(message)
@@ -52,13 +52,11 @@ class LinkedInBot:
             if not has_been_liked in post[i].get_attribute('outerHTML'):
                 # like the post
                 post[i].click()
-                sleep(1)
                 # Posts that are further down in your feed are hidden from the driver.
                 # To access them, every time you like a post (which causes the driver to scroll
                 # down more into your feed), reset the 'post' array with all the possible elements
                 post = self.driver.find_elements_by_class_name('react-button__text')
                 i += 1
-                sleep(1)
             else:
                 # Otherwise, keep scrolling down as if we had liked it to get more elements
                 i += 1
@@ -122,12 +120,9 @@ class LinkedInBot:
                                       "I know your job is tough but what you do genuinely helps so many people and I just wanted to recognize that! " \
                                       "Keep up the great work and have an amazing day!"
                     connect_invite = "Hi " + name_of_connection + "! " + connect_message
-                    self.driver.find_element_by_xpath('//*[@id="custom-message"]').send_keys(connect_invite)
-                    done_with_message = self.driver.find_elements_by_class_name('artdeco-button__text')
-                    for button in range(0, len(done_with_message)):
-                        if 'Done' in done_with_message[i].get_attribute('innerHTML'):  # my button is the 'Done' button
-                            done_with_message[i].click()
-                            break
+                    self.driver.find_element_by_xpath('//*[@id="custom-message"]').send_keys(connect_invite)  # Send your message
+                    done_with_message = self.driver.find_elements_by_class_name('artdeco-button__text')  # Get all the buttons you can press
+                    done_with_message[4].click()  # The 'Done' or send button is the 5th one
 
                     # Now, I have sent the message to my connection and can keep going
                     sleep(3)
